@@ -1,0 +1,58 @@
+name: "Deployment Workflow"
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploymenttype:
+        description: Deploy or Destroy infrastructure
+        required: true
+        default: "deploy"
+        type: choice
+        options:
+          - "deploy"
+          - "destroy"
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  tf_deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.12.0
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: install dependencies
+        run: |
+          npm install --force
+          npm install -g cdktf-cli@latest --force
+      - name: Config credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{secrets.AWS_ACCOUNT}}:role/${{secrets.AWS_ROLE}}
+          role-session-name: ${{secrets.AWS_ROLE}}
+          aws-region: us-east-2
+      - name: CDKTF Deployment
+        run: |
+          cdktf --app "npx ts-node main.ts" synth
+          cdktf --app "npx ts-node main.ts" ${{ inputs.deploymenttype }} "*" --auto-approve
+        env:
+          USER: ${{ secrets.DB_USER }}
+          PASS: ${{ secrets.DB_PASS }}
+          VPC_ID: ${{ secrets.VPC_ID }}
+          STATE_BUCKET: ${{ secrets.BUCKET_NAME }}
+          SUBNET: ${{ secrets.SUBNET_ID }}
+          SUBNET_2: ${{ secrets.SUBNET_TWO }}
+          CERTIFICATE: ${{ secrets.CERTIFICATE }}
+          ZONEID: ${{ secrets.ZONEID }}
