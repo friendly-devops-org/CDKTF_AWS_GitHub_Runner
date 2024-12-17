@@ -78,7 +78,7 @@ export class CodebuildStack extends AwsStackBase {
             },
             source: {
                 type: "GITHUB",
-                location: "https://github.com/friendly-devops-org/CDKTF_AWS_GitHub_Runner.git"
+                location: "CODEBUILD_DEFAULT_WEBHOOK_SOURCE_LOCATION"
 
             }
 
@@ -101,8 +101,7 @@ export class CodebuildStack extends AwsStackBase {
         this.credential = new CodebuildSourceCredential(this, `${props.name}-${props.project}-credentials`, {
             authType: "PERSONAL_ACCESS_TOKEN",
             serverType: "GITHUB",
-            token: `${process.env.GH_TOKEN}`,
-            userName: "friendlyi-devops"
+            token: `${process.env.GH_TOKEN}`
         });
     }
 }
