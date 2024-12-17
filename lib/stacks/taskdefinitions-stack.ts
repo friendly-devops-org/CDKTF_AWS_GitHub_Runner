@@ -1,14 +1,13 @@
 import { Construct } from 'constructs';
 import { Fn } from 'cdktf';
-import { AwsStackBase } from './stackbase';
-import { DbConfigs } from './db-stack';
+import { AwsStackBase, BaseStackProps } from './stackbase';
 import { EcsTaskDefinition} from '@cdktf/provider-aws/lib/ecs-task-definition';
 import { IamRole } from '@cdktf/provider-aws/lib/iam-role';
 import { CloudwatchLogGroup} from '@cdktf/provider-aws/lib/cloudwatch-log-group';
 
 export class taskDefinitionStack extends AwsStackBase {
     public td: EcsTaskDefinition;
-    constructor(scope: Construct, id: string, props: DbConfigs) {
+    constructor(scope: Construct, id: string, props: BaseStackProps) {
         super(scope,  `${props.name}-${id}`, {
             name: props.name,
             project: props.project,

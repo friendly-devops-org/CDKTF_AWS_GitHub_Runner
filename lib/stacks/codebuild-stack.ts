@@ -5,6 +5,13 @@ import { CodebuildProject } from '@cdktf/provider-aws/lib/codebuild-project'
 import { CodebuildWebhook } from '@cdktf/provider-aws/lib/codebuild-webhook'
 import { CodebuildSourceCredential } from '@cdktf/provider-aws/lib/codebuild-source-credential'
 
+export class CodebuildConfigs extends BaseStackProps {
+    name: string,
+    project: string,
+    region: string,
+    securityGroup: string,
+}
+
 export class CodebuildStack extends AwsStackBase {
     public credential: CodebuildSourceCredential;
     public webhook: CodebuildWebhook;
