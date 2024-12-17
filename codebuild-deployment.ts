@@ -19,7 +19,7 @@ const codebuildConfig: CodebuildConfigs = {
     securityGroup: sGroup.sg.id,
 }
 
-const codebuildStack = new CodebuildStack(app, "codebuild-stack", codebuildConfig);
+new CodebuildStack(app, "codebuild-stack", codebuildConfig);
 
 // To deploy using Terraform Cloud comment out the above line
 // And uncomment the below block of lines
