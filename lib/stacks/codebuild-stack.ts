@@ -3,6 +3,7 @@ import { AwsStackBase, BaseStackProps } from './stackbase';
 import { IamRole } from '@cdktf/provider-aws/lib/iam-role';
 import { CodebuildProject } from '@cdktf/provider-aws/lib/codebuild-project'
 import { CodebuildWebhook } from '@cdktf/provider-aws/lib/codebuild-webhook'
+import { CodebuildSourceCredential } from '@cdktf/provider-aws/lib/codebuild-source-credential'
 
 export interface CodebuildConfigs extends BaseStackProps {
     name: string,
@@ -12,6 +13,7 @@ export interface CodebuildConfigs extends BaseStackProps {
 }
 
 export class CodebuildStack extends AwsStackBase {
+    public credential: CodebuildSourceCredential;
     public webhook: CodebuildWebhook;
     constructor(scope: Construct, id: string, props: CodebuildConfigs) {
         super(scope, `${props.name}-${id}`, {
@@ -94,6 +96,12 @@ export class CodebuildStack extends AwsStackBase {
                     ]
                 }
             ],
+        });
+
+        this.credential = new CodebuildSourceCredential(this, `${props.name}-${props.project}-credentials`, {
+            authType: "PERSONAL_ACCESS_TOKEN",
+            serverType: "GITHUB",
+            token: `${process.env.GH_TOKEN}`
         });
     }
 }
