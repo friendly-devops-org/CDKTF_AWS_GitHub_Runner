@@ -28,7 +28,7 @@ jobs:
       - name: CDKTF Synth
         run: |
           cdktf --app "npx ts-node ecs-deployment.ts" synth
-          cdktf --app "npx ts-node cdoebuild-deployment.ts" synth
+          cdktf --app "npx ts-node codebuild-deployment.ts" synth
         env:
           VPC_ID: ${{ secrets.VPC_ID }}
           STATE_BUCKET: ${{ secrets.BUCKET_NAME }}
