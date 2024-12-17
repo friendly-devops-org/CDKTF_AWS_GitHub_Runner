@@ -78,7 +78,7 @@ export class CodebuildStack extends AwsStackBase {
             },
             source: {
                 type: "GITHUB",
-                location: "CODEBUILD_DEFAULT_WEBHOOK_SOURCE_LOCATION"
+                location: "https://github.com/friendly-devops-org"
 
             }
 
