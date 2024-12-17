@@ -15,7 +15,7 @@ export interface CodebuildConfigs extends BaseStackProps {
 export class CodebuildStack extends AwsStackBase {
     public credential: CodebuildSourceCredential;
     public webhook: CodebuildWebhook;
-    constructor(scope: Construct, id: string, props: BaseStackProps) {
+    constructor(scope: Construct, id: string, props: CodebuildConfigs) {
         super(scope, `${props.name}-${id}`, {
             name: `${props.project}`,
             project: `${props.project}`,
@@ -70,14 +70,12 @@ export class CodebuildStack extends AwsStackBase {
                 computeType: "BUILD_GENERAL1_SMALL",
                 image: "aws/codebuild/amazonlinux2-x86_64-standard:4.0",
                 type: "LINUX_CONTAINER",
-            }
-            vpcConfig: [
-                {
-                    securityGroupIds: [`${props.securityGroup}`],
-                    subnets: [`${process.env.SUBNET}`, `${process.env.SUBNET_2}`],
-                    vcpId: `${process.env.VPC_ID}`
-                }
-            ],
+            },
+            vpcConfig: {
+                securityGroupIds: [`${props.securityGroup}`],
+                subnets: [`${process.env.SUBNET}`, `${process.env.SUBNET_2}`],
+                vcpId: `${process.env.VPC_ID}`
+            },
             source: {
                 type: "GITHUB",
 
@@ -88,12 +86,15 @@ export class CodebuildStack extends AwsStackBase {
         this.webhook = new CodebuildWebhook(this, `${props.name}-${props.project}-webhook`, {
             projectName: codebuild.name,
             filterGroup: [
-                filter: [
-                    {
-                        type: "EVENT",
-                        pattern: "WORKFLOW_JOB_QUEUED"
-                    }
-                ]
+                {
+                    filter: [
+                        {
+                            type: "EVENT",
+                            pattern: "WORKFLOW_JOB_QUEUED"
+                        }
+                    ]
+                }
+                
             ]
         });
 
