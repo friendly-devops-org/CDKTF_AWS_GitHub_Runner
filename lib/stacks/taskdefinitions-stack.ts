@@ -127,21 +127,16 @@ export class taskDefinitionStack extends AwsStackBase {
                     value: `${props.name}-container`,
                   },
                   {
-                    name: "WORDPRESS_DB_HOST",
-                    value: props.dbAddress,
-                  },
-                  {
-                    name: "WORDPRESS_DB_USER",
-                    value: `${process.env.USER}`,
-                  },
-                  {
-                    name: "WORDPRESS_DB_PASSWORD",
-                    value: `${process.env.PASS}`,
-                  },
-                  {
-                    name: "WORDPRESS_DB_NAME",
-                    value: props.dbName,
+                    name: "RUNNER_TOKEN",
+                    value: `${process.env.TOKEN}`,
                   }
+                ],
+                command: [
+                    "mkdir actions-runner && cd actions-runner",
+                    "curl -o actions-runner-linux-x64-2.321.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.321.0/actions-runner-linux-x64-2.321.0.tar.gz",
+                    "tar xzf ./actions-runner-linux-x64-2.321.0.tar.gz",
+                    "./config.sh --url https://github.com/friendly-devops-org --token $RUNNER_TOKEN",
+                    "./run.sh"
                 ]
               }
             ]),

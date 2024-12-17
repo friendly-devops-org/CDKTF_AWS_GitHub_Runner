@@ -5,9 +5,9 @@ on:
     branches:
     - "*"
     secrets:
-      AWS_ACCESS_KEY_ID:
+      AWS_ACCOUNT:
         required: true
-      AWS_SECRET_ACCESS_KEY:
+      AWS_ROLE:
         required: true
 
 
@@ -27,13 +27,10 @@ jobs:
           npm install -g cdktf-cli@latest --force
       - name: CDKTF Synth
         run: |
-          cdktf --app "npx ts-node main.ts" synth
+          cdktf --app "npx ts-node ecs-deployment.ts" synth
+          cdktf --app "npx ts-node cdoebuild-deployment.ts" synth
         env:
-          USER: ${{ secrets.DB_USER }}
-          PASS: ${{ secrets.DB_PASS }}
           VPC_ID: ${{ secrets.VPC_ID }}
           STATE_BUCKET: ${{ secrets.BUCKET_NAME }}
           SUBNET: ${{ secrets.SUBNET_ID }}
           SUBNET_2: ${{ secrets.SUBNET_TWO }}
-          CERTIFICATE: ${{ secrets.CERTIFICATE }}
-          ZONEID: ${{ secrets.ZONEID }}

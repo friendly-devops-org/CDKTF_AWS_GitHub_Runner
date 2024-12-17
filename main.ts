@@ -1,7 +1,6 @@
 import { App } from 'cdktf';
 import { BaseStackProps } from './lib/stacks/stackbase';
 import { taskDefinitionStack } from './lib/stacks/taskdefinitions-stack';
-import { dbStack, DbConfigs } from './lib/stacks/db-stack';
 import { LoadBalancerStack, LbConfigs } from './lib/stacks/loadbalancer-stack';
 import { EcsClusterStack } from './lib/stacks/ecs-cluster-stack';
 import { EcsServiceStack, EcsServiceConfigs } from './lib/stacks/ecs-service-stack';
@@ -9,11 +8,10 @@ import { LaunchTemplateStack, LaunchTemplateConfigs } from './lib/stacks/launcht
 import { AutoScalingStack, AutoScalingConfigs } from './lib/stacks/autoscaling-stack';
 import { AppAutoScalingStack, AppAutoScalingConfigs } from './lib/stacks/application-as-stack';
 import { sgStack } from './lib/stacks/securitygroup-stack';
-import { Route53Stack, RouteConfigs } from './lib/stacks/route53-stack';
 
 const StackProps: BaseStackProps = {
-    name: "first-complete",
-    project: "deployment-test",
+    name: "runner",
+    project: "github-group",
     region: "us-east-2"
 }
 
@@ -26,19 +24,9 @@ function aFile(key: string){
 const app = new App();
 const cluster = new EcsClusterStack(app, "ecs-cluster-stack", StackProps);
 const sGroup = new sgStack(app, "sg-stack", StackProps);
-const db = new dbStack(app, "db-stack", StackProps);
 
 const clusterName = `${StackProps.name}-${StackProps.project}-cluster`;
 aFile(clusterName);
-
-const DbConfig: DbConfigs = {
-    name: StackProps.name,
-    project: StackProps.project,
-    region: StackProps.region,
-    dbAddress: db.db.address,
-    dbName: db.db.dbName,
-
-}
 
 const LbConfig: LbConfigs = {
     name: StackProps.name,
@@ -84,7 +72,7 @@ new AutoScalingStack(app, "asg-stack", AsgConfig)
         id: launchTemplate.launchTemplate.id
 }*/
 
-const taskDefinition = new taskDefinitionStack(app, "td-stack", DbConfig);
+const taskDefinition = new taskDefinitionStack(app, "td-stack", StackProps);
 const lb = new LoadBalancerStack(app, "lb-stack", LbConfig);
 
 const EcsConfig: EcsServiceConfigs = {
@@ -113,17 +101,6 @@ const AppAsConfig : AppAutoScalingConfigs = {
 }
 
 new AppAutoScalingStack(app, "ecs-autoscaling-stack", AppAsConfig)
-
- const routeConfig : RouteConfigs = {
-    name: StackProps.name,
-    project: StackProps.project,
-    region: StackProps.region,
-    zoneId: `${process.env.ZONEID}`,
-    dnsName: lb.lb.dnsName,
-    lbZoneId: lb.lb.zoneId,
-}
-
-new Route53Stack(app, "route53-stack", routeConfig)
 
 // To deploy using Terraform Cloud comment out the above line
 // And uncomment the below block of lines
