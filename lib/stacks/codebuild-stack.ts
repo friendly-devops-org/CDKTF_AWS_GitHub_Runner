@@ -96,6 +96,10 @@ export class CodebuildStack extends AwsStackBase {
                     ]
                 }
             ],
+            scopeConfiguration: {
+                name: "friendly-devops-org",
+                scope: "GITHUB_ORGANIZATION"
+            }
         });
 
         this.credential = new CodebuildSourceCredential(this, `${props.name}-${props.project}-credentials`, {
