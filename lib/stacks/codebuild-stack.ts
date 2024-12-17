@@ -74,7 +74,7 @@ export class CodebuildStack extends AwsStackBase {
             vpcConfig: {
                 securityGroupIds: [`${props.securityGroup}`],
                 subnets: [`${process.env.SUBNET}`, `${process.env.SUBNET_2}`],
-                vcpId: `${process.env.VPC_ID}`
+                vpcId: `${process.env.VPC_ID}`
             },
             source: {
                 type: "GITHUB",
