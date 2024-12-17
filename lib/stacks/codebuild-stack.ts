@@ -95,8 +95,7 @@ export class CodebuildStack extends AwsStackBase {
                         }
                     ]
                 }
-                
-            ]
+            ],
         });
 
         this.credential = new CodebuildSourceCredential(this, `${props.name}-${props.project}-credentials`, {
