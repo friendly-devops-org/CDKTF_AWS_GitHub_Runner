@@ -1,5 +1,5 @@
 import { Construct } from 'constructs';
-import { AwsStackBase } from './stackbase';
+import { AwsStackBase, BaseStackProps } from './stackbase';
 import { IamRole } from '@cdktf/provider-aws/lib/iam-role';
 import { CodebuildProject } from '@cdktf/provider-aws/lib/codebuild-project'
 import { CodebuildWebhook } from '@cdktf/provider-aws/lib/codebuild-webhook'
