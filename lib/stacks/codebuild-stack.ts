@@ -97,11 +97,5 @@ export class CodebuildStack extends AwsStackBase {
                 }
             ],
         });
-
-        this.credential = new CodebuildSourceCredential(this, `${props.name}-${props.project}-credentials`, {
-            authType: "PERSONAL_ACCESS_TOKEN",
-            serverType: "GITHUB",
-            token: `${process.env.GH_TOKEN}`
-        });
     }
 }
