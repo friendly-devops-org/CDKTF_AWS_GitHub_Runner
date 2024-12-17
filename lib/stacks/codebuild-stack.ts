@@ -64,7 +64,7 @@ export class CodebuildStack extends AwsStackBase {
 
         const codebuild = new CodebuildProject (this, `${props.name}-codebuild-${props.project}`, {
             name: `${props.name}-${props.project}-codebuild`,
-            artifacts: {type: "NO ARTIFACTS"},
+            artifacts: {type: "NO_ARTIFACTS"},
             serviceRole: codebuildRole.arn,
             environment: {
                 computeType: "BUILD_GENERAL1_SMALL",
