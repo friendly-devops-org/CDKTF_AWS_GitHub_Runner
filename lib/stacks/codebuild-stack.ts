@@ -32,7 +32,7 @@ export class CodebuildStack extends AwsStackBase {
                 Statement: [
                   {
                     Effect: "Allow",
-                    Action: ["codebuild:*", "ec2:*", "kms:*", "ecr:*"],
+                    Action: ["codebuild:*", "ec2:*", "kms:*", "ecr:*", "cloudwatch:*"],
                     Resource: "*",
                   },
                 ],
