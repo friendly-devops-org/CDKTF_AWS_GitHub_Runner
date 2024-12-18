@@ -24,7 +24,7 @@ export class AutoScalingStack extends AwsStackBase {
             project: props.project,
             region: props.region,
         })
-        autoScaling = new AutoscalingGroup(this, `${props.name}-auto-scaler`, {
+        const autoScaling = new AutoscalingGroup(this, `${props.name}-auto-scaler`, {
             name: `${props.name}-${props.project}`,
             desiredCapacity: props.desiredCapacity,
             minSize: props.minSize,
