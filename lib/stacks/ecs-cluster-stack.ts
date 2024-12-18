@@ -17,7 +17,7 @@ export class EcsClusterStack extends AwsStackBase {
             name: `${props.name}-${props.project}-cluster`
         });
 
-        new IamRole(this, `${props.name}-ecs-role`, {
+        const ecsRole = new IamRole(this, `${props.name}-ecs-role`, {
           name: `${props.name}-ecs-role`,
           inlinePolicy: [
             {
