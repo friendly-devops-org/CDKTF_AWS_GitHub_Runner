@@ -22,7 +22,7 @@ export class AppAutoScalingStack extends AwsStackBase {
             project: props.project,
             region: props.region,
         })
-        appAutoScaling = new AppautoscalingTarget(this, `${props.name}-application-auto-scaler`, {
+        const appAutoScaling = new AppautoscalingTarget(this, `${props.name}-application-auto-scaler`, {
             minCapacity: props.minCapacity,
             maxCapacity: props.maxCapacity,
             resourceId: `service/${props.ecsClusterName}/${props.ecsServiceName}`,
