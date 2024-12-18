@@ -18,16 +18,13 @@ export interface AutoScalingConfigs extends BaseStackProps {
 }
 
 export class AutoScalingStack extends AwsStackBase {
-    private autoScaling: AutoscalingGroup;
-//    private cpuAutoScalingPolicy: AutoscalingPolicy;
-//    private memoryAutoScalingPolicy: AutoscalingPolicy;
     constructor(scope: Construct, id: string, props: AutoScalingConfigs) {
         super(scope,  `${props.name}-${id}`, {
             name: props.name,
             project: props.project,
             region: props.region,
         })
-        this.autoScaling = new AutoscalingGroup(this, `${props.name}-auto-scaler`, {
+        autoScaling = new AutoscalingGroup(this, `${props.name}-auto-scaler`, {
             name: `${props.name}-${props.project}`,
             desiredCapacity: props.desiredCapacity,
             minSize: props.minSize,
@@ -38,7 +35,7 @@ export class AutoScalingStack extends AwsStackBase {
         });
 
         new AutoscalingPolicy(this, `${props.name}-cpu-auto-scaler`, {
-            autoscalingGroupName: this.autoScaling.name,
+            autoscalingGroupName: autoScaling.name,
             name: `${props.name}-${props.project}-cpu-scaler`,
             policyType: "TargetTrackingScaling",
             targetTrackingConfiguration: {
@@ -57,7 +54,7 @@ export class AutoScalingStack extends AwsStackBase {
         });
 
         new AutoscalingPolicy(this, `${props.name}-memory-auto-scaler`, {
-            autoscalingGroupName: this.autoScaling.name,
+            autoscalingGroupName: autoScaling.name,
             name: `${props.name}-${props.project}-memory-scaler`,
             policyType: "TargetTrackingScaling",
             targetTrackingConfiguration: {
