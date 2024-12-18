@@ -58,8 +58,8 @@ export class EcsClusterStack extends AwsStackBase {
         });
 
         this.instanceProfile = new IamInstanceProfile(this, `${props.name}-instance-profile`, {
-            name: this.ecsRole.name,
-            role: this.ecsRole.name,
+            name: ecsRole.name,
+            role: ecsRole.name,
         })
     }
 }
