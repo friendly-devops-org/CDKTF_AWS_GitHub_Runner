@@ -102,7 +102,7 @@ export class taskDefinitionStack extends AwsStackBase {
             containerDefinitions: Fn.jsonencode([
               {
                 name: "client",
-                image: "wordpress:latest",
+                image: "debian:trixie-slim",
                 essential: true,
                 portMappings: [
                   {

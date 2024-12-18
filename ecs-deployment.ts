@@ -25,7 +25,7 @@ const app = new App();
 const cluster = new EcsClusterStack(app, "ecs-cluster-stack", StackProps);
 const sGroup = new sgStack(app, "sg-stack", StackProps);
 
-const clusterName = `${StackProps.name}-${StackProps.project}-cluster`;
+const clusterName = `${cluster.cluster.name}`;
 aFile(clusterName);
 
 const LbConfig: LbConfigs = {
