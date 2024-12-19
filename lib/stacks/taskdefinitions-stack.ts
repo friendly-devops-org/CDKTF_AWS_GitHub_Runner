@@ -131,11 +131,11 @@ export class taskDefinitionStack extends AwsStackBase {
                   }
                 ],
                 command: [
-                    "mkdir actions-runner && cd actions-runner",
-                    "curl -o actions-runner-linux-x64-2.321.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.321.0/actions-runner-linux-x64-2.321.0.tar.gz",
-                    "tar xzf ./actions-runner-linux-x64-2.321.0.tar.gz",
-                    "./config.sh --url https://github.com/friendly-devops-org --token $RUNNER_TOKEN",
-                    "./run.sh"
+                    "bash -c mkdir actions-runner && cd actions-runner",
+                    "bash -c curl -o actions-runner-linux-x64-2.321.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.321.0/actions-runner-linux-x64-2.321.0.tar.gz",
+                    "bash -c tar xzf ./actions-runner-linux-x64-2.321.0.tar.gz",
+                    "bash -c ./config.sh --url https://github.com/friendly-devops-org --token $RUNNER_TOKEN",
+                    "bash -c ./run.sh"
                 ]
               }
             ]),
