@@ -1,7 +1,6 @@
 import { App } from 'cdktf';
 import { BaseStackProps } from './lib/stacks/stackbase';
 import { taskDefinitionStack } from './lib/stacks/taskdefinitions-stack';
-import { LoadBalancerStack, LbConfigs } from './lib/stacks/loadbalancer-stack';
 import { EcsClusterStack } from './lib/stacks/ecs-cluster-stack';
 import { EcsServiceStack, EcsServiceConfigs } from './lib/stacks/ecs-service-stack';
 import { LaunchTemplateStack, LaunchTemplateConfigs } from './lib/stacks/launchtemplate-stack';
@@ -27,14 +26,6 @@ const sGroup = new sgStack(app, "sg-stack", StackProps);
 
 const clusterName = `${cluster.cluster.name}`;
 aFile(clusterName);
-
-const LbConfig: LbConfigs = {
-    name: StackProps.name,
-    project: StackProps.project,
-    region: StackProps.region,
-    securityGroup: sGroup.sg.id,
-    certificate: `${process.env.CERTIFICATE}`,
-}
 
 const LTConfig: LaunchTemplateConfigs = {
     name: StackProps.name,
@@ -73,7 +64,6 @@ new AutoScalingStack(app, "asg-stack", AsgConfig)
 }*/
 
 const taskDefinition = new taskDefinitionStack(app, "td-stack", StackProps);
-const lb = new LoadBalancerStack(app, "lb-stack", LbConfig);
 
 const EcsConfig: EcsServiceConfigs = {
     name: StackProps.name,
@@ -81,7 +71,6 @@ const EcsConfig: EcsServiceConfigs = {
     region: StackProps.region,
     cluster: cluster.cluster.arn,
     taskDefinition: taskDefinition.td.arn,
-    targetGroup: lb.targetGroup.arn,
     securityGroup: sGroup.sg.id,
     desiredCount: 1,
 }

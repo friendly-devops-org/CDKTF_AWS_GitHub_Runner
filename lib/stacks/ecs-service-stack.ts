@@ -8,7 +8,6 @@ export interface EcsServiceConfigs extends BaseStackProps {
     region: string,
     cluster: string,
     taskDefinition: string,
-    targetGroup: string,
     securityGroup: string,
     desiredCount: number,
 }
@@ -28,13 +27,6 @@ export class EcsServiceStack extends AwsStackBase {
             desiredCount: props.desiredCount,
             launchType: "EC2",
             healthCheckGracePeriodSeconds: 300,
-            loadBalancer: [
-                {
-                    targetGroupArn: props.targetGroup,
-                    containerName: "client",
-                    containerPort: 80,
-                },
-            ],
             networkConfiguration: {
                 assignPublicIp: false,
                 subnets: [`${process.env.SUBNET}`, `${process.env.SUBNET_2}`],
