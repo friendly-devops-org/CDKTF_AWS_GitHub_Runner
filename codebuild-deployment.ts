@@ -1,7 +1,6 @@
 import { App } from 'cdktf';
 import { BaseStackProps } from './lib/stacks/stackbase';
 import { CodebuildStack, CodebuildConfigs } from './lib/stacks/codebuild-stack';
-import { sgStack } from './lib/stacks/securitygroup-stack';
 
 const StackProps: BaseStackProps = {
     name: "runner",
@@ -10,13 +9,11 @@ const StackProps: BaseStackProps = {
 }
 
 const app = new App();
-const sGroup = new sgStack(app, "sg-stack", StackProps);
 
 const codebuildConfig: CodebuildConfigs = {
     name: StackProps.name,
     project: StackProps.project,
     region: StackProps.region,
-    securityGroup: sGroup.sg.id,
 }
 
 new CodebuildStack(app, "codebuild-stack", codebuildConfig);
