@@ -13,7 +13,8 @@ const StackProps: BaseStackProps = {
 function aFile(key: string){
     const fileS = require('fs');
     fileS.writeFileSync('./scripts/cluster.sh',"#!/bin/bash\n");
-    fileS.appendFileSync('./scripts/cluster.sh',"yum install -y tar curl\n");
+    fileS.appendFileSync('./scripts/cluster.sh',"yum install -y tar curl jq\n");
+    fileS.appendFileSync('./scripts/cluster.sh',"su ec2-user");
     fileS.appendFileSync('./scripts/cluster.sh',"cd ~/ && mkdir actions-runner && cd actions-runner\n");
     fileS.appendFileSync('./scripts/cluster.sh',"curl -o actions-runner-linux-x64-2.321.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.321.0/actions-runner-linux-x64-2.321.0.tar.gz\n");
     fileS.appendFileSync('./scripts/cluster.sh',"tar xzf ./actions-runner-linux-x64-2.321.0.tar.gz\n");
@@ -31,7 +32,7 @@ const LTConfig: LaunchTemplateConfigs = {
     name: StackProps.name,
     project: StackProps.project,
     region: StackProps.region,
-    imageId: "ami-00f453db4525939cf",
+    imageId: "ami-088d38b423bff245f",
     instanceType: "t3.micro",
     securityGroupIds: [sGroup.sg.id],
     userData: "./scripts/cluster.sh"
