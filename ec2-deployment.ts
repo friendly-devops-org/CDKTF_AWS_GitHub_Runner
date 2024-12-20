@@ -23,7 +23,7 @@ function aFile(key: string){
 const app = new App();
 const sGroup = new sgStack(app, "sg-stack", StackProps);
 
-const token = `${process.env.RUNNER_TOKEN}`;
+const token = "AMQS3FBCUDC3J53DWR3KNX3HMTH36";
 aFile(token);
 
 const LTConfig: LaunchTemplateConfigs = {
@@ -36,7 +36,7 @@ const LTConfig: LaunchTemplateConfigs = {
     userData: "./scripts/cluster.sh"
 }
 
-const launchTemplate = new LaunchTemplateStack(app, "lt-stack", LTConfig)
+const launchTemplate = new LaunchTemplateStack(app, "lt-ec2-stack", LTConfig)
 
 /*const InstanceConfig: InstanceConfigs {
     launchTemplate: {
