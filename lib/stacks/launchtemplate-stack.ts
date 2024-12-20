@@ -9,7 +9,7 @@ export interface LaunchTemplateConfigs extends BaseStackProps {
     region: string,
     imageId: string,
     instanceType: string,
-    iamInstanceProfile: string,
+    iamInstanceProfile?: string,
     securityGroupIds: string[],
     userData: string,
 }
