@@ -19,7 +19,7 @@ function aFile(key: string){
     fileS.appendFileSync('./scripts/cluster.sh',"curl -o actions-runner-linux-x64-2.321.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.321.0/actions-runner-linux-x64-2.321.0.tar.gz\n");
     fileS.appendFileSync('./scripts/cluster.sh',"tar xzf ./actions-runner-linux-x64-2.321.0.tar.gz\n");
     fileS.appendFileSync('./scripts/cluster.sh',"chown -R $(whoami):$(whoami) ../actions-runner\n");
-    fileS.appendFileSync('./scripts/cluster.sh',"hostname=$(hostname) && runnername='AWS-EC2'");
+    fileS.appendFileSync('./scripts/cluster.sh',"hostname=$(hostname) && runnername='AWS-EC2'\n");
     fileS.appendFileSync('./scripts/cluster.sh',"./config.sh --url https://github.com/friendly-devops-org --runnergroup Test --token " + key + "\n");
     fileS.appendFileSync('./scripts/cluster.sh',"./run.sh");
 }
