@@ -14,11 +14,13 @@ function aFile(key: string){
     const fileS = require('fs');
     fileS.writeFileSync('./scripts/cluster.sh',"#!/bin/bash\n");
     fileS.appendFileSync('./scripts/cluster.sh',"yum install -y tar curl\n");
-    fileS.appendFileSync('./scripts/cluster.sh',"su - ec2-user\n");
+    fileS.appendFileSync('./scripts/cluster.sh',"export RUNNER_ALLOW_RUNASROOT=true\n");
     fileS.appendFileSync('./scripts/cluster.sh',"cd ~/ && mkdir actions-runner && cd actions-runner\n");
     fileS.appendFileSync('./scripts/cluster.sh',"curl -o actions-runner-linux-x64-2.321.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.321.0/actions-runner-linux-x64-2.321.0.tar.gz\n");
     fileS.appendFileSync('./scripts/cluster.sh',"tar xzf ./actions-runner-linux-x64-2.321.0.tar.gz\n");
-    fileS.appendFileSync('./scripts/cluster.sh',"./config.sh --url https://github.com/friendly-devops-org --token " + key + "\n");
+    fileS.appendFileSync('./scripts/cluster.sh',"chown -R $(whoami):$(whoami) ../actions-runner\n");
+    fileS.appendFileSync('./scripts/cluster.sh',"hostname=$(hostname) && runnername='AWS-EC2'");
+    fileS.appendFileSync('./scripts/cluster.sh',"./config.sh --url https://github.com/friendly-devops-org --runnergroup Test --token " + key + "\n");
     fileS.appendFileSync('./scripts/cluster.sh',"./run.sh");
 }
 
@@ -32,7 +34,7 @@ const LTConfig: LaunchTemplateConfigs = {
     name: StackProps.name,
     project: StackProps.project,
     region: StackProps.region,
-    imageId: "ami-0b4624933067d393a",
+    imageId: "ami-00f453db4525939cf",
     instanceType: "t3.micro",
     securityGroupIds: [sGroup.sg.id],
     userData: "./scripts/cluster.sh"
