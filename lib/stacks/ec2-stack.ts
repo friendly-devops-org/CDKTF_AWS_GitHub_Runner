@@ -68,6 +68,7 @@ export class InstanceStack extends AwsStackBase {
         new Instance(this,`${props.name}-instance`, {
             launchTemplate: props.launchTemplate,
             iamInstanceProfile: instanceProfile.name,
+            keyName: "check",
             tags: {
                 Name: `${props.name}-${props.project}-${props.region}-instance`
             }
