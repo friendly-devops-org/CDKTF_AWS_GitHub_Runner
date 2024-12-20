@@ -5,7 +5,7 @@ import { LaunchTemplateStack, LaunchTemplateConfigs } from './lib/stacks/launcht
 import { sgStack } from './lib/stacks/securitygroup-stack';
 
 const StackProps: BaseStackProps = {
-    name: "runner",
+    name: "runner1",
     project: "github-ec2-group",
     region: "us-east-2"
 }
