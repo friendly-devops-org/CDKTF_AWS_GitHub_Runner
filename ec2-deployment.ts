@@ -21,7 +21,7 @@ function aFile(key: string){
 }
 
 const app = new App();
-const sGroup = new sgStack(app, "sg-stack", StackProps);
+const sGroup = new sgStack(app, "sg-ec2-stack", StackProps);
 
 const token = "AMQS3FBCUDC3J53DWR3KNX3HMTH36";
 aFile(token);
