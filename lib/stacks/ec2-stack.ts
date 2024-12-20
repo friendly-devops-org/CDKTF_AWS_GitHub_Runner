@@ -13,7 +13,7 @@ export interface InstanceConfigs extends BaseStackProps {
 }
 
 export class InstanceStack extends AwsStackBase {
-    constructor(scope: Construct, id: string, props: EcsServiceConfigs) {
+    constructor(scope: Construct, id: string, props: InstanceConfigs) {
         super(scope,`${props.name}-${id}` , {
             name: props.name,
             project: props.project,
