@@ -6,7 +6,7 @@ import { sgStack } from './lib/stacks/securitygroup-stack';
 
 const StackProps: BaseStackProps = {
     name: "runner",
-    project: "github-group",
+    project: "github-ec2-group",
     region: "us-east-2"
 }
 
