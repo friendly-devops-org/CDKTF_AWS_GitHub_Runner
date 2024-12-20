@@ -1,7 +1,6 @@
 import { App } from 'cdktf';
 import { BaseStackProps } from './lib/stacks/stackbase';
-import { taskDefinitionStack } from './lib/stacks/taskdefinitions-stack';
-import { InstanceStack, InstanceConfigs } from './lib/stacks/ecs-cluster-stack';
+import { InstanceStack, InstanceConfigs } from './lib/stacks/ec2-stack';
 import { LaunchTemplateStack, LaunchTemplateConfigs } from './lib/stacks/launchtemplate-stack';
 import { sgStack } from './lib/stacks/securitygroup-stack';
 
@@ -33,7 +32,6 @@ const LTConfig: LaunchTemplateConfigs = {
     region: StackProps.region,
     imageId: "ami-00f453db4525939cf",
     instanceType: "t3.micro",
-    iamInstanceProfile: cluster.instanceProfile.name,
     securityGroupIds: [sGroup.sg.id],
     userData: "./scripts/cluster.sh"
 }
@@ -45,14 +43,16 @@ const launchTemplate = new LaunchTemplateStack(app, "lt-stack", LTConfig)
         id: launchTemplate.launchTemplate.id
 }*/
 
-const Ec2Config: LaunchTemplateConfigs = {
+const Ec2Config: InstanceConfigs = {
     name: StackProps.name,
     project: StackProps.project,
     region: StackProps.region,
-    launchTemplate: launchTemplate.launchTemplate.id
+    launchTemplate: {
+        id: launchTemplate.launchTemplate.id
+    }
 }
 
-const ec2 = new instanceStack(app, "ec2-stack", Ec2Config);
+new InstanceStack(app, "ec2-stack", Ec2Config);
 
 
 // To deploy using Terraform Cloud comment out the above line
