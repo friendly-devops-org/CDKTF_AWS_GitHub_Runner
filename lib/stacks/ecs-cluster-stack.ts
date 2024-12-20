@@ -27,7 +27,7 @@ export class EcsClusterStack extends AwsStackBase {
                 Statement: [
                   {
                     Effect: "Allow",
-                    Action: ["ecs:*", "ec2:*", "kms:*", "efs:*"],
+                    Action: [ "ec2:*", "kms:*", "efs:*"],
                     Resource: "*",
                   },
                 ],

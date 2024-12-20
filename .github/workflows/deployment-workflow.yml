@@ -11,6 +11,7 @@ on:
         options:
           - "codebuild"
           - "ecs"
+          - "ec2"
       deploymenttype:
         description: Deploy or Destroy infrastructure
         required: true
