@@ -30,7 +30,7 @@ export class InstanceStack extends AwsStackBase {
                 Statement: [
                   {
                     Effect: "Allow",
-                    Action: [ "ec2:*", "kms:*"],
+                    Action: [ "ec2:*", "kms:*", "ec2:DescribeInstances"],
                     Resource: "*",
                   },
                 ],
