@@ -61,3 +61,6 @@ jobs:
           STATE_BUCKET: ${{ secrets.BUCKET_NAME }}
           SUBNET: ${{ secrets.SUBNET_ID }}
           SUBNET_2: ${{ secrets.SUBNET_TWO }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+          REPO_OWNER: ${{ github.repository_owner }}

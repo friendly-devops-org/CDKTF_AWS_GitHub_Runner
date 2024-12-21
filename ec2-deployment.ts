@@ -3,6 +3,7 @@ import { BaseStackProps } from './lib/stacks/stackbase';
 import { InstanceStack, InstanceConfigs } from './lib/stacks/ec2-stack';
 import { LaunchTemplateStack, LaunchTemplateConfigs } from './lib/stacks/launchtemplate-stack';
 import { sgStack } from './lib/stacks/securitygroup-stack';
+import { SsmStack, paramStoreConfigs } from './lib/stacks/ssm-stack';
 
 const StackProps: BaseStackProps = {
     name: "runner1",
@@ -13,28 +14,32 @@ const StackProps: BaseStackProps = {
 function aFile(key: string){
     const fileS = require('fs');
     fileS.writeFileSync('./scripts/cluster.sh',"#!/bin/bash\n");
-    fileS.appendFileSync('./scripts/cluster.sh',"yum install -y tar curl\n");
+    fileS.appendFileSync('./scripts/cluster.sh',"yum install -y tar curl jq\n");
     fileS.appendFileSync('./scripts/cluster.sh',"export RUNNER_ALLOW_RUNASROOT=true\n");
-    fileS.appendFileSync('./scripts/cluster.sh',"cd ~/ && mkdir actions-runner && cd actions-runner\n");
+    fileS.appendFileSync('./scripts/cluster.sh',"mkdir /home/ec2-user/actions-runner && cd /home/ec2-user/actions-runner\n");
     fileS.appendFileSync('./scripts/cluster.sh',"curl -o actions-runner-linux-x64-2.321.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.321.0/actions-runner-linux-x64-2.321.0.tar.gz\n");
     fileS.appendFileSync('./scripts/cluster.sh',"tar xzf ./actions-runner-linux-x64-2.321.0.tar.gz\n");
-    fileS.appendFileSync('./scripts/cluster.sh',"chown -R $(whoami):$(whoami) ../actions-runner\n");
-    fileS.appendFileSync('./scripts/cluster.sh',"hostname=$(hostname) && runnername='AWS-EC2'\n");
-    fileS.appendFileSync('./scripts/cluster.sh',"./config.sh --url https://github.com/friendly-devops-org --runnergroup Test --token " + key + "\n");
+    fileS.appendFileSync('./scripts/cluster.sh',"chown -R ec2-user:ec2-user ../actions-runner\n");
+    fileS.appendFileSync('./scripts/cluster.sh',"runnername='AWS-EC2'\n");
+    fileS.appendFileSync('./scripts/cluster.sh',"export PAT=$(aws ssm get-parameter --name '" + key + "' --with-decryption --query Parameter.Value --output text)");
+    fileS.appendFileSync('./scripts/cluster.sh',"export TOKEN=$(curl -L   -X POST   -H \"Accept: application/vnd.github+json\"   -H \"Authorization: Bearer $ACESS_TOKEN\"   -H \"X-GitHub-Api-Version: 2022-11-28\"   https://api.github.com/orgs/" + `${process.env.REPO_OWNER}` + "/actions/runners/registration-token | jq -r .token)\n");
+    // ###### To deploy to personal account comment out upper line and uncomment the lower line ####
+    //fileS.appendFileSync('./scripts/cluster.sh',"export TOKEN=$(curl -L   -X POST   -H \"Accept: application/vnd.github+json\"   -H \"Authorization: Bearer $ACESS_TOKEN\"   -H \"X-GitHub-Api-Version: 2022-11-28\"   https://api.github.com/" + `${process.env.REPO_OWNER}` + "/" + `${process.env.REPOSITORY}` + "/actions/runners/registration-token | jq -r .token)\n");
+    fileS.appendFileSync('./scripts/cluster.sh',"./config.sh --url https://github.com/" + `${process.env.REPO_OWNER}` + " --runnergroup Default --token $TOKEN\n");
     fileS.appendFileSync('./scripts/cluster.sh',"./run.sh");
 }
 
 const app = new App();
 const sGroup = new sgStack(app, "sg-ec2-stack", StackProps);
 
-const token = "AMQS3FC4HWK4ZV3H5SSPWY3HMUUIA";
+const token = `/${StackProps.project}/${StackProps.name}/gh-token`;
 aFile(token);
 
 const LTConfig: LaunchTemplateConfigs = {
     name: StackProps.name,
     project: StackProps.project,
     region: StackProps.region,
-    imageId: "ami-0b4624933067d393a",
+    imageId: "ami-00f453db4525939cf",
     instanceType: "t3.micro",
     securityGroupIds: [sGroup.sg.id],
     userData: "./scripts/cluster.sh"
@@ -42,10 +47,15 @@ const LTConfig: LaunchTemplateConfigs = {
 
 const launchTemplate = new LaunchTemplateStack(app, "lt-ec2-stack", LTConfig)
 
-/*const InstanceConfig: InstanceConfigs {
-    launchTemplate: {
-        id: launchTemplate.launchTemplate.id
-}*/
+const PmsConfig: paramStoreConfigs = {
+    name: props.name,
+    project: props.project,
+    region: props.region,
+    paramName: "gh-token",
+    paramValue: `${process.env.GH_TOKEN}`,
+}
+
+new SsmStack(app, "gh-token-pm-store", pmsConfig)
 
 const Ec2Config: InstanceConfigs = {
     name: StackProps.name,
