@@ -14,7 +14,7 @@ const StackProps: BaseStackProps = {
 function aFile(key: string){
     const fileS = require('fs');
     fileS.writeFileSync('./scripts/cluster.sh',"#!/bin/bash\n");
-    fileS.appendFileSync('./scripts/cluster.sh',"yum install -y tar curl jq\n");
+    fileS.appendFileSync('./scripts/cluster.sh',"yum install -y tar curl jq dotnet-sdk-6.0\n");
     fileS.appendFileSync('./scripts/cluster.sh',"export RUNNER_ALLOW_RUNASROOT=true\n");
     fileS.appendFileSync('./scripts/cluster.sh',"mkdir /home/ec2-user/actions-runner && cd /home/ec2-user/actions-runner\n");
     fileS.appendFileSync('./scripts/cluster.sh',"curl -o actions-runner-linux-x64-2.321.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.321.0/actions-runner-linux-x64-2.321.0.tar.gz\n");
