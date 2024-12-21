@@ -21,7 +21,7 @@ function aFile(key: string){
     fileS.appendFileSync('./scripts/cluster.sh',"tar xzf ./actions-runner-linux-x64-2.321.0.tar.gz\n");
     fileS.appendFileSync('./scripts/cluster.sh',"chown -R ec2-user:ec2-user ../actions-runner\n");
     fileS.appendFileSync('./scripts/cluster.sh',"runnername='AWS-EC2'\n");
-    fileS.appendFileSync('./scripts/cluster.sh',"export PAT=$(aws ssm get-parameter --name '" + key + "' --with-decryption --query Parameter.Value --output text)");
+    fileS.appendFileSync('./scripts/cluster.sh',"export PAT=$(aws ssm get-parameter --name '" + key + "' --with-decryption --query Parameter.Value --output text)\n");
     fileS.appendFileSync('./scripts/cluster.sh',"export TOKEN=$(curl -L   -X POST   -H \"Accept: application/vnd.github+json\"   -H \"Authorization: Bearer $ACESS_TOKEN\"   -H \"X-GitHub-Api-Version: 2022-11-28\"   https://api.github.com/orgs/" + `${process.env.REPO_OWNER}` + "/actions/runners/registration-token | jq -r .token)\n");
     // ###### To deploy to personal account comment out upper line and uncomment the lower line ####
     //fileS.appendFileSync('./scripts/cluster.sh',"export TOKEN=$(curl -L   -X POST   -H \"Accept: application/vnd.github+json\"   -H \"Authorization: Bearer $ACESS_TOKEN\"   -H \"X-GitHub-Api-Version: 2022-11-28\"   https://api.github.com/" + `${process.env.REPO_OWNER}` + "/" + `${process.env.REPOSITORY}` + "/actions/runners/registration-token | jq -r .token)\n");
