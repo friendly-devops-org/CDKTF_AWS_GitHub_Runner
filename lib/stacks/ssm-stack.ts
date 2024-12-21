@@ -1,6 +1,6 @@
 import { Construct } from 'constructs';
 import { AwsStackBase, BaseStackProps } from './stackbase';
-import { SsmParameter } from '@cdktf/provider-aws/lib/kms-key';
+import { SsmParameter } from '@cdktf/provider-aws/lib/ssm-parameter';
 
 export interface paramStoreConfigs extends BaseStackProps {
     name: string,
