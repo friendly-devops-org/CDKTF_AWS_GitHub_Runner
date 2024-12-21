@@ -48,14 +48,14 @@ const LTConfig: LaunchTemplateConfigs = {
 const launchTemplate = new LaunchTemplateStack(app, "lt-ec2-stack", LTConfig)
 
 const PmsConfig: paramStoreConfigs = {
-    name: props.name,
-    project: props.project,
-    region: props.region,
+    name: StackProps.name,
+    project: StackProps.project,
+    region: StackProps.region,
     paramName: "gh-token",
     paramValue: `${process.env.GH_TOKEN}`,
 }
 
-new SsmStack(app, "gh-token-pm-store", pmsConfig)
+new SsmStack(app, "gh-token-pm-store", PmsConfig)
 
 const Ec2Config: InstanceConfigs = {
     name: StackProps.name,
