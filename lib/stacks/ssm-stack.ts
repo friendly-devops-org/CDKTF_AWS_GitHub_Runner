@@ -19,7 +19,7 @@ export class SsmStack extends AwsStackBase {
         })
 
         new SsmParameter (this, `${props.name}-parameter-store`, {
-            name: `${props.name}/${props.project}/${props.paramName}`,
+            name: `/${props.name}/${props.project}/${props.paramName}`,
             type: "SecureString",
             value: props.paramValue
         })

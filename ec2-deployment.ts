@@ -32,7 +32,7 @@ function aFile(key: string){
 const app = new App();
 const sGroup = new sgStack(app, "sg-ec2-stack", StackProps);
 
-const token = `/${StackProps.project}/${StackProps.name}/gh-token`;
+const token = `/${StackProps.name}/${StackProps.project}/gh-token`;
 aFile(token);
 
 const LTConfig: LaunchTemplateConfigs = {
