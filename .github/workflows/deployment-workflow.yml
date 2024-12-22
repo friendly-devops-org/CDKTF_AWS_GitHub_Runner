@@ -1,6 +1,28 @@
 name: "Deployment Workflow"
 
 on:
+ workflow_call:
+    inputs:
+      deploymentobject:
+        description: Deploy or Destroy infrastructure
+        required: true
+        type: string
+      deploymenttype:
+        description: Deploy or Destroy infrastructure
+        required: true
+        type: string
+      resourceName:
+        required: true
+        type: string
+      projectName:
+        required: true
+        type: string
+    secrets:
+      AWS_ACCOUNT:
+        required: true
+      AWS_ROLE:
+        required: true
+
   workflow_dispatch:
     inputs:
       deploymentobject:
@@ -65,5 +87,5 @@ jobs:
           AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
           REPOSITORY: ${{ github.repository }}
           REPO_OWNER: ${{ github.repository_owner }}
-          RUNNER_NAME: ${{ inputs.name }}
-          RUNNER_PROJECT: ${{ inputs.projectName }}
+          RESOURCE_NAME: ${{ inputs.resourceName }}
+          RESOURCE_PROJECT: ${{ inputs.projectName }}

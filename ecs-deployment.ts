@@ -10,8 +10,8 @@ import { sgStack } from './lib/stacks/securitygroup-stack';
 import { SsmStack, paramStoreConfigs } from './lib/stacks/ssm-stack';
 
 const StackProps: BaseStackProps = {
-    name: "runner",
-    project: "github-group",
+    name: `${process.env.RESOURCE_NAME}`,
+    project: `${process.env.RESOURCE_PROJECT}`,
     region: "us-east-2"
 }
 
