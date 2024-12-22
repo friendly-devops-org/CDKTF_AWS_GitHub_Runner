@@ -1,28 +1,6 @@
 name: "Deployment Workflow"
 
 on:
-  workflow_call:
-    inputs:
-      deploymentobject:
-        description: Deploy or Destroy infrastructure
-        required: true
-        type: string
-      deploymenttype:
-        description: Deploy or Destroy infrastructure
-        required: true
-        type: string
-      name:
-        required: true
-        type: string
-      projectName:
-        required: true
-        type: string
-    secrets:
-      AWS_ACCOUNT:
-        required: true
-      AWS_ROLE:
-        required: true
-
   workflow_dispatch:
     inputs:
       deploymentobject:
@@ -42,12 +20,6 @@ on:
         options:
           - "deploy"
           - "destroy"
-      name:
-        required: true
-        default: "runner"
-      projectName:
-        required: true
-        default: "github-group"
     secrets:
       AWS_ACCOUNT:
         required: true
