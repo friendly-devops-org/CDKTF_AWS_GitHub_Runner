@@ -96,7 +96,7 @@ export class taskDefinitionStack extends AwsStackBase {
             memory: "512",
             cpu: "1024",
             networkMode: "awsvpc",
-            requiresCompatibilities: ["EC2"],
+            requiresCompatibilities: ["EC2", "FARGATE"],
             executionRoleArn: executionRole.arn,
             taskRoleArn: taskRole.arn,
 
