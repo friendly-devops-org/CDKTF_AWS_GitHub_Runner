@@ -44,6 +44,8 @@ jobs:
               ###### To deploy to personal account uncomment the lower line ####
               #sed -ie "s/{REPOSITORY}/$REPOSITORY/g" entrypoint.sh
 
+              cat entrypoint.sh
+
               docker build -t github-runner:latest . 
               aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.us-east-2.amazonaws.com
               docker tag github-runner:latest ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.us-east-2.amazonaws.com/github-runner:latest
