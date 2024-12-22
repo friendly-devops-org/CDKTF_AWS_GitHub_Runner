@@ -13,11 +13,9 @@ on:
         type: string
       resourceName:
         required: true
-        default: "runner"
         type: string
       projectName:
         required: true
-        default: "github-group"
         type: string
     secrets:
       AWS_ACCOUNT:
@@ -44,6 +42,14 @@ on:
         options:
           - "deploy"
           - "destroy"
+      resourceName:
+        required: true
+        default: "runner"
+        type: string
+      projectName:
+        required: true
+        default: "github-group"
+        type: string
     secrets:
       AWS_ACCOUNT:
         required: true
