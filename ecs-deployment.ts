@@ -3,8 +3,8 @@ import { BaseStackProps } from './lib/stacks/stackbase';
 import { taskDefinitionStack } from './lib/stacks/taskdefinitions-stack';
 import { EcsClusterStack } from './lib/stacks/ecs-cluster-stack';
 import { EcsServiceStack, EcsServiceConfigs } from './lib/stacks/ecs-service-stack';
-import { LaunchTemplateStack, LaunchTemplateConfigs } from './lib/stacks/launchtemplate-stack';
-import { AutoScalingStack, AutoScalingConfigs } from './lib/stacks/autoscaling-stack';
+//import { LaunchTemplateStack, LaunchTemplateConfigs } from './lib/stacks/launchtemplate-stack';
+//import { AutoScalingStack, AutoScalingConfigs } from './lib/stacks/autoscaling-stack';
 import { AppAutoScalingStack, AppAutoScalingConfigs } from './lib/stacks/application-as-stack';
 import { sgStack } from './lib/stacks/securitygroup-stack';
 import { SsmStack, paramStoreConfigs } from './lib/stacks/ssm-stack';
@@ -15,19 +15,22 @@ const StackProps: BaseStackProps = {
     region: "us-east-2"
 }
 
+/*
 function aFile(key: string){
     const fileS = require('fs');
     fileS.writeFileSync('./scripts/cluster.sh',"#!/bin/bash\n");
     fileS.appendFileSync('./scripts/cluster.sh',"sudo echo ECS_CLUSTER=" + key + " >> /etc/ecs/ecs.config");
 }
+*/
 
 const app = new App();
 const cluster = new EcsClusterStack(app, "ecs-cluster-stack", StackProps);
 const sGroup = new sgStack(app, "sg-stack", StackProps);
 
 const clusterName = `${StackProps.name}-${StackProps.project}-cluster`;
-aFile(clusterName);
+//aFile(clusterName);
 
+/*
 const LTConfig: LaunchTemplateConfigs = {
     name: StackProps.name,
     project: StackProps.project,
@@ -58,6 +61,7 @@ const AsgConfig: AutoScalingConfigs = {
 }
 
 new AutoScalingStack(app, "asg-stack", AsgConfig)
+*/
 
 const taskDefinition = new taskDefinitionStack(app, "td-stack", StackProps);
 
