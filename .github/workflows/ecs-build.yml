@@ -16,6 +16,11 @@ on:
       projectName:
         required: true
         default: "github-group"
+    secrets:
+      AWS_ACCOUNT:
+        required: true
+      AWS_ROLE:
+        required: true
 jobs:
   container-image-push:
     runs-on: ubuntu-latest
@@ -49,3 +54,4 @@ jobs:
       projectName: "${{ inputs.projectName }}"
       deploymenttype: "${{ inputs.deploymenttype }}"
       deploymentobject: "ecs"
+    secrets: inherit
