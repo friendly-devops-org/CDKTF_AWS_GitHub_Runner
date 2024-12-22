@@ -31,10 +31,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        if: ${{ github.event.inputs.deploymenttyp == 'deploy' }}
+        if: ${{ github.event.inputs.deploymenttype == 'deploy' }}
         uses: actions/checkout@v2
       - name: Deploy GitHub-Runner Image
-        if: ${{ github.event.inputs.deploymenttyp == 'deploy' }}
+        if: ${{ github.event.inputs.deploymenttype == 'deploy' }}
         run: |
               cd docker
 
@@ -54,7 +54,7 @@ jobs:
           RESOURCE_NAME: ${{ inputs.name }}
           RESOURCE_PROJECT: ${{ inputs.projectName }}
       - name: Deploy GitHub-Runner Image
-        if: ${{ github.event.inputs.deploymenttyp == 'destroy' }}
+        if: ${{ github.event.inputs.deploymenttype == 'destroy' }}
         run: |
           aws ecr batch-delete-image \
           --repository-name ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.us-east-2.amazonaws.com \
