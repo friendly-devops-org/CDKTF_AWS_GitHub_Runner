@@ -103,7 +103,7 @@ export class taskDefinitionStack extends AwsStackBase {
             containerDefinitions: Fn.jsonencode([
               {
                 name: "client",
-                image: `${process.env.AWS_ACCOUNT}.dkr.ecr.us-east-2.amazonaws.com/github-runner:latest `,
+                image: `${process.env.AWS_ACCOUNT}.dkr.ecr.us-east-2.amazonaws.com/github-runner:latest`,
                 essential: true,
                 portMappings: [
                   {
