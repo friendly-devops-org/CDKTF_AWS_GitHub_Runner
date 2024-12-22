@@ -6,26 +6,17 @@ on:
       deploymentobject:
         description: Deploy or Destroy infrastructure
         required: true
-        default: "codebuild"
-        type: choice
-        options:
-          - "codebuild"
-          - "ecs"
-          - "ec2"
+        type: string
       deploymenttype:
         description: Deploy or Destroy infrastructure
         required: true
-        default: "deploy"
-        type: choice
-        options:
-          - "deploy"
-          - "destroy"
+        type: string
       name:
         required: true
-        default: "runner"
+        type: string
       projectName:
         required: true
-        default: "github-group"
+        type: string
     secrets:
       AWS_ACCOUNT:
         required: true
