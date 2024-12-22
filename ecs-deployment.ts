@@ -27,10 +27,10 @@ const app = new App();
 const cluster = new EcsClusterStack(app, "ecs-cluster-stack", StackProps);
 const sGroup = new sgStack(app, "sg-stack", StackProps);
 
-const clusterName = `${StackProps.name}-${StackProps.project}-cluster`;
-//aFile(clusterName);
-
 /*
+const clusterName = `${StackProps.name}-${StackProps.project}-cluster`;
+aFile(clusterName);
+
 const LTConfig: LaunchTemplateConfigs = {
     name: StackProps.name,
     project: StackProps.project,
