@@ -38,9 +38,9 @@ jobs:
         run: |
               cd docker
 
-              sed -ie "s/{NAME}/$RESOURCE_NAME/g" /entrypoint.sh
-              sed -ie "s/{PROJECt}/$RESOURCE_PROJECT/g" /entrypoint.sh
-              sed -ie "s/{REPO_OWNER}/$REPO_OWNER/g" /entrypoint.sh
+              sed -ie "s/{NAME}/$RESOURCE_NAME/g" entrypoint.sh
+              sed -ie "s/{PROJECt}/$RESOURCE_PROJECT/g" entrypoint.sh
+              sed -ie "s/{REPO_OWNER}/$REPO_OWNER/g" entrypoint.sh
               ###### To deploy to personal account uncomment the lower line ####
               #sed -ie "s/{REPOSITORY}/$REPOSITORY/g" entrypoint.sh
 
