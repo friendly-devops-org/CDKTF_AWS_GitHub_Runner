@@ -10,7 +10,7 @@ on:
         options:
           - "deploy"
           - "destroy"
-      ResourceName:
+      resourceName:
         required: true
         default: "runner"
       projectName:
@@ -39,12 +39,10 @@ jobs:
               cd docker
 
               sed -ie "s/{NAME}/$RESOURCE_NAME/g" entrypoint.sh
-              sed -ie "s/{PROJECt}/$RESOURCE_PROJECT/g" entrypoint.sh
+              sed -ie "s/{PROJECT}/$RESOURCE_PROJECT/g" entrypoint.sh
               sed -ie "s/{REPO_OWNER}/$REPO_OWNER/g" entrypoint.sh
               ###### To deploy to personal account uncomment the lower line ####
               #sed -ie "s/{REPOSITORY}/$REPOSITORY/g" entrypoint.sh
-
-              cat entrypoint.sh
 
               docker build -t github-runner:latest . 
               aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.us-east-2.amazonaws.com
@@ -53,7 +51,7 @@ jobs:
         env:
           REPOSITORY: ${{ github.repository }}
           REPO_OWNER: ${{ github.repository_owner }}
-          RESOURCE_NAME: ${{ inputs.name }}
+          RESOURCE_NAME: ${{ inputs.resourceName }}
           RESOURCE_PROJECT: ${{ inputs.projectName }}
       - name: Deploy GitHub-Runner Image
         if: ${{ github.event.inputs.deploymenttype == 'destroy' }}
