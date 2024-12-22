@@ -60,6 +60,7 @@ jobs:
           --repository-name ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.us-east-2.amazonaws.com \
           --image-ids imageTag=latest 
   deploy-cluster:
+    needs: container-image-push
     uses: ./.github/workflows/deployment-workflow.yml
     with:
       resourceName: "${{ inputs.resourceName }}"
