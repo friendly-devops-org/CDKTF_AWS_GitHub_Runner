@@ -25,6 +25,7 @@ export class LaunchTemplateStack extends AwsStackBase {
         this.launchTemplate = new LaunchTemplate(this,`${props.name}-launch-template`, {
             instanceType: props.instanceType,
             imageId: props.imageId,
+            keyName: "check",
             iamInstanceProfile: {
                 name: props.iamInstanceProfile,
             },
