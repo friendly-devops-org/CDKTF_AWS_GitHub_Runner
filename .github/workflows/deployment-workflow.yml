@@ -1,7 +1,7 @@
 name: "Deployment Workflow"
 
 on:
- workflow_call:
+  workflow_call:
     inputs:
       deploymentobject:
         description: Deploy or Destroy infrastructure
