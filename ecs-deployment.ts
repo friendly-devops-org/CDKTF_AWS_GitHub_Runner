@@ -58,11 +58,6 @@ const AsgConfig: AutoScalingConfigs = {
 
 new AutoScalingStack(app, "asg-stack", AsgConfig)
 
-/*const InstanceConfig: InstanceConfigs {
-    launchTemplate: {
-        id: launchTemplate.launchTemplate.id
-}*/
-
 const taskDefinition = new taskDefinitionStack(app, "td-stack", StackProps);
 
 const EcsConfig: EcsServiceConfigs = {
