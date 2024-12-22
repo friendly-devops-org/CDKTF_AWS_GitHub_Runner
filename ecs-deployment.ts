@@ -7,10 +7,11 @@ import { LaunchTemplateStack, LaunchTemplateConfigs } from './lib/stacks/launcht
 import { AutoScalingStack, AutoScalingConfigs } from './lib/stacks/autoscaling-stack';
 import { AppAutoScalingStack, AppAutoScalingConfigs } from './lib/stacks/application-as-stack';
 import { sgStack } from './lib/stacks/securitygroup-stack';
+import { SsmStack, paramStoreConfigs } from './lib/stacks/ssm-stack';
 
 const StackProps: BaseStackProps = {
-    name: "runner",
-    project: "github-group",
+    name: `${process.env.RUNNER_NAME}`,
+    project: `${process.env.RUNNER_PROJECT}`,
     region: "us-east-2"
 }
 
@@ -59,6 +60,16 @@ const AsgConfig: AutoScalingConfigs = {
 new AutoScalingStack(app, "asg-stack", AsgConfig)
 
 const taskDefinition = new taskDefinitionStack(app, "td-stack", StackProps);
+
+const PmsConfig: paramStoreConfigs = {
+    name: StackProps.name,
+    project: StackProps.project,
+    region: StackProps.region,
+    paramName: "ecs-gh-token",
+    paramValue: `${process.env.GH_TOKEN}`,
+}
+
+new SsmStack(app, "gh-token-pm-store", PmsConfig)
 
 const EcsConfig: EcsServiceConfigs = {
     name: StackProps.name,

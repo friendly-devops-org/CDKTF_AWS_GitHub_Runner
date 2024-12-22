@@ -20,6 +20,12 @@ on:
         options:
           - "deploy"
           - "destroy"
+      name:
+        required: true
+        default: "runner"
+      projectName:
+        required: true
+        default: "github-group"
     secrets:
       AWS_ACCOUNT:
         required: true
@@ -65,3 +71,5 @@ jobs:
           AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
           REPOSITORY: ${{ github.repository }}
           REPO_OWNER: ${{ github.repository_owner }}
+          RUNNER_NAME: ${{ inputs.name }}
+          RUNNER_PROJECT: ${{ inputs.projectName }}
