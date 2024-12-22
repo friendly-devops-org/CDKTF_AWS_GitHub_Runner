@@ -29,6 +29,7 @@ export class taskDefinitionStack extends AwsStackBase {
                       "ecr:BatchCheckLayerAvailability",
                       "ecr:GetDownloadUrlForLayer",
                       "ecr:BatchGetImage",
+                      "ssm:GetParameter",
                       "logs:CreateLogStream",
                       "logs:PutLogEvents",
                     ],
@@ -63,7 +64,7 @@ export class taskDefinitionStack extends AwsStackBase {
                 Statement: [
                   {
                     Effect: "Allow",
-                    Action: ["logs:CreateLogStream", "logs:PutLogEvents"],
+                    Action: ["ssm:GetParameter","logs:CreateLogStream", "logs:PutLogEvents"],
                     Resource: "*",
                   },
                 ],
