@@ -13,9 +13,11 @@ on:
         type: string
       resourceName:
         required: true
+        default: "runner"
         type: string
       projectName:
         required: true
+        default: "github-group"
         type: string
     secrets:
       AWS_ACCOUNT:
