@@ -29,18 +29,10 @@ permissions:
 jobs:
   container-image-push:
     runs-on: codebuild-runner-github-group-codebuild-${{ github.run_id }}-${{ github.run_attempt }}
-    #runs-on: ubuntu-latest
     steps:
       - name: Checkout
         if: ${{ github.event.inputs.deploymenttype == 'deploy' }}
         uses: actions/checkout@v2
-       # Uncomment the below field and re-align if running of ubuntu-latest
-       #- name: Config credentials
-       #  uses: aws-actions/configure-aws-credentials@v4
-       #  with:
-       #    role-to-assume: arn:aws:iam::${{secrets.AWS_ACCOUNT}}:role/${{secrets.AWS_ROLE}}
-       #    role-session-name: ${{secrets.AWS_ROLE}}
-       #    aws-region: us-east-2
       - name: Deploy GitHub-Runner Image
         if: ${{ github.event.inputs.deploymenttype == 'deploy' }}
         run: |
@@ -65,7 +57,7 @@ jobs:
         if: ${{ github.event.inputs.deploymenttype == 'destroy' }}
         run: |
           aws ecr batch-delete-image \
-          --repository-name ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.us-east-2.amazonaws.com \
+          --repository-name github-runner \
           --image-ids imageTag=latest 
   deploy-cluster:
     needs: container-image-push
