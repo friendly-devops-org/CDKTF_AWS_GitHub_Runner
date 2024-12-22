@@ -25,10 +25,10 @@ export class EcsServiceStack extends AwsStackBase {
             name: `${props.name}-service`,
             taskDefinition: props.taskDefinition,
             desiredCount: props.desiredCount,
-            launchType: "EC2",
+            launchType: "FARGATE",
             healthCheckGracePeriodSeconds: 300,
             networkConfiguration: {
-                assignPublicIp: false,
+                assignPublicIp: true,
                 subnets: [`${process.env.SUBNET}`, `${process.env.SUBNET_2}`],
                 securityGroups: [props.securityGroup]
             }
