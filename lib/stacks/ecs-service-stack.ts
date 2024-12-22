@@ -28,7 +28,7 @@ export class EcsServiceStack extends AwsStackBase {
             launchType: "EC2",
             healthCheckGracePeriodSeconds: 300,
             networkConfiguration: {
-                assignPublicIp: true,
+                assignPublicIp: false,
                 subnets: [`${process.env.SUBNET}`, `${process.env.SUBNET_2}`],
                 securityGroups: [props.securityGroup]
             }
