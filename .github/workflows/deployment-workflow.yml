@@ -62,5 +62,6 @@ jobs:
           SUBNET: ${{ secrets.SUBNET_ID }}
           SUBNET_2: ${{ secrets.SUBNET_TWO }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
           REPOSITORY: ${{ github.repository }}
           REPO_OWNER: ${{ github.repository_owner }}
