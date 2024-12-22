@@ -34,14 +34,6 @@ on:
           - "codebuild"
           - "ecs"
           - "ec2"
-      deploymenttype:
-        description: Deploy or Destroy infrastructure
-        required: true
-        default: "deploy"
-        type: choice
-        options:
-          - "deploy"
-          - "destroy"
       resourceName:
         required: true
         default: "runner"
@@ -50,6 +42,14 @@ on:
         required: true
         default: "github-group"
         type: string
+      deploymenttype:
+        description: Deploy or Destroy infrastructure
+        required: true
+        default: "deploy"
+        type: choice
+        options:
+          - "deploy"
+          - "destroy"
     secrets:
       AWS_ACCOUNT:
         required: true
