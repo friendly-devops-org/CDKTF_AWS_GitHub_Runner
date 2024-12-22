@@ -130,7 +130,7 @@ export class taskDefinitionStack extends AwsStackBase {
                     name: "RUNNER_TOKEN",
                     value: `${process.env.RUNNER_TOKEN}`,
                   }
-                ],
+                ]/*,
                 command: [
                     "/bin/bash", "-c", "apt install -y curl tar",
                     "cd ~/",
@@ -139,7 +139,7 @@ export class taskDefinitionStack extends AwsStackBase {
                     "tar xzf ./actions-runner-linux-x64-2.321.0.tar.gz;",
                     "./config.sh --url https://github.com/friendly-devops-org --token $RUNNER_TOKEN;",
                     "./run.sh;"
-                ]
+                ]*/
               }
             ]),
         })
