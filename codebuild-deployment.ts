@@ -3,8 +3,8 @@ import { BaseStackProps } from './lib/stacks/stackbase';
 import { CodebuildStack, CodebuildConfigs } from './lib/stacks/codebuild-stack';
 
 const StackProps: BaseStackProps = {
-    name: "runner",
-    project: "github-group",
+    name: `${process.env.RESOURCE_NAME}`,
+    project: `${process.env.RESOURCE_PROJECT}`,
     region: "us-east-2"
 }
 
