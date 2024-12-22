@@ -27,6 +27,8 @@ function aFile(key: string){
     // ###### To deploy to personal account comment out upper line and uncomment the lower line ####
     //fileS.appendFileSync('./scripts/cluster.sh',"export TOKEN=$(curl -L   -X POST   -H \"Accept: application/vnd.github+json\"   -H \"Authorization: Bearer $ACESS_TOKEN\"   -H \"X-GitHub-Api-Version: 2022-11-28\"   https://api.github.com/" + `${process.env.REPO_OWNER}` + "/" + `${process.env.REPOSITORY}` + "/actions/runners/registration-token | jq -r .token)\n");
     fileS.appendFileSync('./scripts/cluster.sh',"./config.sh --url https://github.com/" + `${process.env.REPO_OWNER}` + " --runnergroup Default --token $TOKEN\n");
+    // ###### To deploy to personal account comment out upper line and uncomment the lower line ####
+    //fileS.appendFileSync('./scripts/cluster.sh',"./config.sh --url https://github.com/" + `${process.env.REPO_OWNER}` + "/" + `${process.env.REPOSITORY}` + " --runnergroup Default --token $TOKEN\n");
     fileS.appendFileSync('./scripts/cluster.sh',"./run.sh");
 }
 
