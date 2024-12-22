@@ -21,6 +21,11 @@ on:
         required: true
       AWS_ROLE:
         required: true
+
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   container-image-push:
     runs-on: ubuntu-latest
