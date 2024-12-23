@@ -19,7 +19,9 @@ Add CDKTF_ECS_TFC_ORGANIZATION to the env block of CDKTF Deployment in .github/w
 
 ### Deploy ECS Application:
 The ecs runner requires a custom image with the GitHub registration script already copied to the image.
+
 If that is lacking an ECS deployment workflow is available for creating and deploying an image to an AWS ECR. 
+
 The workflow is designed to run on an AWS codebuild instance. Follow the above instructions to first deploy an Codebuild instance before deploying the ECS build deployment workflow.
     1. Navigate to the Actions tab
     2. Select ECS Deployment on the left panel
