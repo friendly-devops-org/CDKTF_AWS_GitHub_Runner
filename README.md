@@ -23,6 +23,7 @@ The ecs runner requires a custom image with the GitHub registration script alrea
 If that is lacking an ECS deployment workflow is available for creating and deploying an image to an AWS ECR. 
 
 The workflow is designed to run on an AWS codebuild instance. Follow the above instructions to first deploy an Codebuild instance before deploying the ECS build deployment workflow.
+
     1. Navigate to the Actions tab
     2. Select ECS Deployment on the left panel
     3. Select Run workflow
