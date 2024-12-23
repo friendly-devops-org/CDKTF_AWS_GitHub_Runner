@@ -17,6 +17,16 @@ Add CDKTF_ECS_TFC_ORGANIZATION to the env block of CDKTF Deployment in .github/w
     8. SUBNET_2: <second_subnet>
     8. GH_TOKEN: <Personal Access Token>
 
+### Deploy Application:
+    1. Navigate to the Actions tab
+    2. Select Deployment Workflow on the left panel
+    3. Select Run workflow
+    4. Ensure the correct branch is selected
+    5. Select Deployment Type
+    6. Set rsourceName and projectName
+    7. Ensure deploy is selected in the drop down menu
+    8. Run workflow
+
 ### Deploy ECS Application:
 The ecs runner requires a custom image with the GitHub registration script already copied to the image.
 
@@ -31,16 +41,6 @@ The workflow is designed to run on an AWS codebuild instance. Follow the above i
     5. Ensure deploy is selected in the drop down menu
     6. Set rsourceName and projectName
     7. Run workflow
-
-### Deploy Application:
-    1. Navigate to the Actions tab
-    2. Select Deployment Workflow on the left panel
-    3. Select Run workflow
-    4. Ensure the correct branch is selected
-    5. Select Deployment Type
-    6. Set rsourceName and projectName
-    7. Ensure deploy is selected in the drop down menu
-    8. Run workflow
 
 ### Verify codebuild deployment by:
     1. Go to the Settings page of the repository or organization set for Runner
